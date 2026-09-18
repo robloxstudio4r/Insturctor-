@@ -1,49 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instructor+</title>
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Instructor+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css" />
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
-  <!-- Auth Screen -->
-  <div id="auth-screen" class="auth-screen">
-    <div class="auth-card">
-      <h1>Instructor<span>+</span></h1>
-      <form id="login-form">
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <button type="submit" class="btn btn-primary">Sign In</button>
-        <div id="login-error" class="error"></div>
+
+<!-- ============ AUTH ============ -->
+<section id="auth" class="auth">
+  <div class="auth-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-side">
+      <div class="logo-large">
+        <div class="logo-mark">i<span>+</span></div>
+        <h1>Instructor<span>+</span></h1>
+      </div>
+      <p class="tagline">The modern learning platform for teachers and students who expect more.</p>
+      <ul class="feature-list">
+        <li><i data-lucide="book-open"></i> Organize courses &amp; assignments</li>
+        <li><i data-lucide="calendar-days"></i> Built-in calendar</li>
+        <li><i data-lucide="message-square"></i> Direct messaging</li>
+        <li><i data-lucide="award"></i> Grading with feedback</li>
+      </ul>
+    </div>
+
+    <div class="auth-form-wrap">
+      <!-- LOGIN -->
+      <form id="login-form" class="auth-form">
+        <h2>Welcome back</h2>
+        <p class="muted">Sign in to continue to Instructor+</p>
+
+        <label class="field">
+          <i data-lucide="mail"></i>
+          <input type="email" id="login-email" placeholder=" " required />
+          <span>Email address</span>
+        </label>
+
+        <label class="field">
+          <i data-lucide="lock"></i>
+          <input type="password" id="login-password" placeholder=" " required />
+          <span>Password</span>
+        </label>
+
+        <div id="login-error" class="form-error"></div>
+
+        <button class="btn btn-primary btn-block" type="submit">
+          <span>Sign in</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+
+        <p class="auth-switch">
+          Need to set up the platform? <button type="button" class="link" id="to-setup">Create the first admin</button>
+        </p>
       </form>
-      <p class="muted">First time? <a href="#" id="show-setup">Create admin account</a></p>
+
+      <!-- FIRST ADMIN SETUP -->
+      <form id="setup-form" class="auth-form hidden">
+        <h2>Create the first admin</h2>
+        <p class="muted">This form only works while no users exist yet. After that, only admins can create accounts.</p>
+
+        <label class="field">
+          <i data-lucide="user"></i>
+          <input id="setup-name" placeholder=" " required />
+          <span>Full name</span>
+        </label>
+
+        <label class="field">
+          <i data-lucide="mail"></i>
+          <input id="setup-email" type="email" placeholder=" " required />
+          <span>Email address</span>
+        </label>
+
+        <label class="field">
+          <i data-lucide="lock"></i>
+          <input id="setup-password" type="password" minlength="6" placeholder=" " required />
+          <span>Password (min 6)</span>
+        </label>
+
+        <div id="setup-error" class="form-error"></div>
+
+        <button class="btn btn-primary btn-block" type="submit">
+          <span>Create admin</span>
+          <i data-lucide="shield-check"></i>
+        </button>
+
+        <p class="auth-switch">
+          Already set up? <button type="button" class="link" id="to-login">Back to sign in</button>
+        </p>
+      </form>
     </div>
   </div>
+</section>
 
-  <!-- App Shell -->
-  <div id="app" class="app hidden">
-    <aside class="sidebar">
-      <div class="brand">Instructor<span>+</span></div>
-      <nav id="nav"></nav>
-      <div class="user-info">
-        <span id="user-name"></span>
-        <span id="user-role" class="badge"></span>
-        <button id="signout" class="btn btn-sm">Sign Out</button>
+<!-- ============ APP ============ -->
+<section id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo-mark">i<span>+</span></div>
+      <span class="brand-text">Instructor<span>+</span></span>
+    </div>
+
+    <nav id="nav" class="nav"></nav>
+
+    <div class="sidebar-user">
+      <div class="avatar" id="sb-avatar"></div>
+      <div class="sb-info">
+        <div class="sb-name" id="sb-name"></div>
+        <div class="sb-role" id="sb-role"></div>
       </div>
-    </aside>
-    <main class="main">
-      <header class="topbar">
-        <h1 id="page-title">Dashboard</h1>
-      </header>
-      <div id="view" class="view"></div>
-    </main>
-  </div>
+      <button class="icon-btn" id="signout" title="Sign out"><i data-lucide="log-out"></i></button>
+    </div>
+  </aside>
 
-  <div id="modal-root"></div>
-  <div id="toasts"></div>
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" id="menu-toggle"><i data-lucide="menu"></i></button>
+      <div class="crumbs" id="crumbs"></div>
+      <div class="topbar-actions" id="topbar-actions"></div>
+    </header>
+    <div class="view" id="view"></div>
+  </main>
+</section>
 
-  <script type="module" src="assets/js/app.js"></script>
+<div id="modal-root"></div>
+<div id="toasts" class="toasts"></div>
+
+<script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
