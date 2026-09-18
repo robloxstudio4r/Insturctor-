@@ -6,6 +6,15 @@ export async function signIn(email, password) {
   return data;
 }
 
+export async function signUp({ email, password, full_name, role }) {
+  const { data, error } = await supabase.auth.signUp({
+    email, password,
+    options: { data: { full_name, role: role || 'student' } }
+  });
+  if (error) throw error;
+  return data;
+}
+
 export async function signOut() {
   await supabase.auth.signOut();
 }
@@ -16,17 +25,14 @@ export async function getSession() {
 }
 
 export async function getProfile() {
-  const session = await getSession();
-  if (!session) return null;
+  const s = await getSession();
+  if (!s) return null;
   const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', session.user.id)
-    .single();
+    .from('profiles').select('*').eq('id', s.user.id).maybeSingle();
   if (error) throw error;
   return data;
 }
 
-export function onAuthChange(callback) {
-  supabase.auth.onAuthStateChange((_event, session) => callback(session));
+export function onAuth(cb) {
+  supabase.auth.onAuthStateChange((_e, s) => cb(s));
 }
