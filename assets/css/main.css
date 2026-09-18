@@ -1,0 +1,23 @@
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --primary: #3b82f6;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+.hidden { display: none !important; }
+.app { display: flex; height: 100vh; }
+.sidebar { width: 260px; background: var(--surface); padding: 1rem; display: flex; flex-direction: column; }
+.main { flex: 1; padding: 2rem; overflow-y: auto; }
+.auth-screen { display: flex; align-items: center; justify-content: center; height: 100vh; }
+.auth-card { background: var(--surface); padding: 2rem; border-radius: 12px; width: 360px; }
+.input, .btn { width: 100%; padding: 0.6rem; margin: 0.3rem 0; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; }
+.btn-primary { background: var(--primary); border: none; cursor: pointer; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #334155; }
+.badge { padding: 0.2rem 0.5rem; border-radius: 999px; font-size: 0.8rem; }
+.badge-admin { background: #7c3aed; }
+.badge-teacher { background: #059669; }
+.badge-student { background: #2563eb; }
